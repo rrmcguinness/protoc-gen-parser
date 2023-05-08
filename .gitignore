@@ -1,6 +1,13 @@
-# If you prefer the allow list template instead of the deny list, see community template:
-# https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
-#
+# macOS-specific excludes
+.DS_Store
+
+
+# IntelliJ Idea
+*.iml
+
+# The program executable
+proto-gen-md-diagrams
+
 # Binaries for programs and plugins
 *.exe
 *.exe~
@@ -11,7 +18,7 @@
 # Test binary, built with `go test -c`
 *.test
 
-# Output of the go coverage tool, specifically when used with LiteIDE
+# Output of the go _coverage tool, specifically when used with LiteIDE
 *.out
 
 # Dependency directories (remove the comment below to include it)
@@ -19,3 +26,9 @@
 
 # Go workspace file
 go.work
+
+.fleet/
+.idea/
+/target*
+/bazel-*
+/_coverage

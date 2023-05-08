@@ -1,0 +1,12 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "api",
+    srcs = [
+        "graph.go",
+        "interfaces.go",
+        "shared_types.go",
+    ],
+    importpath = "github.com/GoogleCloudPlatform/proto-gen-parser/pkg/api",
+    visibility = ["//visibility:public"],
+)

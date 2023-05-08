@@ -1,2 +1,2 @@
 # protoc-gen-parser
-Reads protocol files into a DOM.
+Reads protocol files into an Object Model.

@@ -1,0 +1,87 @@
+# Copyright 2023 Google, LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+load("@gazelle//:def.bzl", "gazelle")
+load("@rules_pkg//:pkg.bzl", "pkg_zip")
+load("@rules_license//rules:license.bzl", "license")
+
+package(
+    default_applicable_licenses = ["//:license"],
+    default_visibility = ["//visibility:public"],
+)
+
+licenses(["NOTICE"])
+
+license(
+    name = "license",
+    license_kinds = [
+        "@rules_license//licenses/spdx:Apache-2.0",
+    ],
+    license_text = "LICENSE",
+)
+
+# gazelle:prefix github.com/GoogleCloudPlatform/proto-gen-parser
+# gazelle:exclude test/protos/**
+gazelle(name = "gazelle")
+
+archive_base_name = "proto-gen-parser"
+
+pkg_zip(
+    name = "main_zip",
+    srcs = [
+        "LICENSE",
+        "NOTICE",
+        "README.md",
+        "//cmd",
+    ],
+    out = "binary.zip",
+    package_file_name = select({
+        "on_linux": "{}-linux-x86_64".format(archive_base_name),
+        "on_osx_x64": "{}-osx-x86_64".format(archive_base_name),
+        "on_windows": "{}-win-x86_64".format(archive_base_name),
+        "on_osx_arm64": "{}-osx-arm64".format(archive_base_name),
+    }),
+)
+
+config_setting(
+    name = "on_linux",
+    constraint_values = [
+        "@platforms//os:linux",
+        "@platforms//cpu:x86_64",
+    ],
+)
+
+config_setting(
+    name = "on_windows",
+    constraint_values = [
+        "@platforms//os:windows",
+        "@platforms//cpu:x86_64",
+    ],
+)
+
+config_setting(
+    name = "on_osx_x64",
+    constraint_values = [
+        "@platforms//os:osx",
+        "@platforms//cpu:x86_64",
+    ],
+)
+
+config_setting(
+    name = "on_osx_arm64",
+    constraint_values = [
+        "@platforms//os:osx",
+        "@platforms//cpu:arm64",
+    ],
+)
