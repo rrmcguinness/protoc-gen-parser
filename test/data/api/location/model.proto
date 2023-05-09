@@ -17,6 +17,10 @@ package test.location;
 // Import google timestamp to identify
 import "google/protobuf/timestamp.proto";
 
+// Import BQ Options
+import "api/bq_table.proto";
+import "api/bq_field.proto";
+
 // Go Lang Options
 option go_package = "gcp/proto/test/location";
 
@@ -28,6 +32,8 @@ option java_multiple_files = true;
 // A physical location that can be described with either an address
 // or a set of geo coordinates.
 message PhysicalLocation {
+  option (gen_bq_schema.bigquery_opts).table_name = "tbl_physical_location";
+
   // A postal address for the physical location.
   message Address {
     // Address type is used to identify the type of address.
@@ -53,7 +59,13 @@ message PhysicalLocation {
     reserved 8 to 20;
   }
   // The timestamp the record was created
-  google.protobuf.Timestamp created = 1;
+  google.protobuf.Timestamp created = 1 [
+    json_name = 'created',
+    (gen_bq_schema.bigquery) = { 
+      require: true
+      type_override: 'TIMESTAMP'
+    }
+  ];
   // The mailing address of the location
   Address address = 2;
   // Longitude degrees

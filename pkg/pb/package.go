@@ -24,25 +24,25 @@ import (
 
 // option an option implementation
 type option struct {
-	name    string
-	value   string
-	comment string
+	NameValue     string
+	ValueString   string
+	CommentString string
 }
 
 func (o *option) Name() string {
-	return o.name
+	return o.NameValue
 }
 
 func (o *option) Value() string {
-	return o.value
+	return o.ValueString
 }
 
 func (o *option) Comment() string {
-	return o.comment
+	return o.CommentString
 }
 
 func (o *option) SetComment(in string) {
-	o.comment = in
+	o.CommentString = in
 }
 
 // _import an import implementation
@@ -66,12 +66,12 @@ func (i *_import) SetComment(in string) {
 // _package - the package implementation
 type _package struct {
 	api.Qualified
-	options  []api.Option
-	imports  []api.Import
-	messages []api.Message
-	enums    []api.Enum
-	services []api.Service
-	graph    api.Graph
+	OptionValues  []api.Option
+	ImportValues  []api.Import
+	MessageValues []api.Message
+	EnumValues    []api.Enum
+	ServiceValues []api.Service
+	Graph         api.Graph
 }
 
 func addVertex(pkg api.Package, vertexType api.VertexType, qualified api.Qualified) {
@@ -82,53 +82,53 @@ func addVertex(pkg api.Package, vertexType api.VertexType, qualified api.Qualifi
 }
 
 func (p *_package) Options() []api.Option {
-	return p.options
+	return p.OptionValues
 }
 
 func (p *_package) AddOption(name string, value string, comment string) api.Package {
-	p.options = append(p.options, &option{name: name, value: value, comment: comment})
+	p.OptionValues = append(p.OptionValues, &option{NameValue: name, ValueString: value, CommentString: comment})
 	return p
 }
 
 func (p *_package) Imports() []api.Import {
-	return p.imports
+	return p.ImportValues
 }
 
 func (p *_package) AddImport(path string, comment string) api.Package {
-	p.imports = append(p.imports, &_import{path: path, comment: comment})
+	p.ImportValues = append(p.ImportValues, &_import{path: path, comment: comment})
 	return p
 }
 
 func (p *_package) Messages() []api.Message {
-	return p.messages
+	return p.MessageValues
 }
 
 func (p *_package) AddMessage(message api.Message) api.Package {
 	addVertex(p, api.MESSAGE, message)
-	p.messages = append(p.messages, message)
+	p.MessageValues = append(p.MessageValues, message)
 	return p
 }
 
 func (p *_package) Enums() []api.Enum {
-	return p.enums
+	return p.EnumValues
 }
 
 func (p *_package) AddEnum(enum api.Enum) api.Package {
 	addVertex(p, api.ENUM, enum)
-	p.enums = append(p.enums, enum)
+	p.EnumValues = append(p.EnumValues, enum)
 	return p
 }
 
 func (p *_package) Services() []api.Service {
-	return p.services
+	return p.ServiceValues
 }
 
 func (p *_package) AddService(service api.Service) api.Package {
 	addVertex(p, api.SERVICE, service)
-	p.services = append(p.services, service)
+	p.ServiceValues = append(p.ServiceValues, service)
 	return p
 }
 
 func (p _package) GetGraph() api.Graph {
-	return p.graph
+	return p.Graph
 }

@@ -16,6 +16,8 @@
 
 package reader
 
+import "strings"
+
 // CommentVisitor is responsible for reading and recoding comment lines,
 // it DOES NOT handle inline comments because of how the
 type CommentVisitor struct {
@@ -28,5 +30,5 @@ func (cv *CommentVisitor) CanVisit(in *Line) bool {
 
 // Visit marshals a line into a Comment struct.
 func (cv *CommentVisitor) Visit(scanner Scanner, in *Line, _ string) interface{} {
-	return in.Comment
+	return strings.Trim(in.Comment, Space)
 }

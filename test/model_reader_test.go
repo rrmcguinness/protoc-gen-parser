@@ -21,10 +21,8 @@ func TestMessageReader(t *testing.T) {
 
 	assert.Equal(t, "test.location", pkg.Name())
 
-	assert.Equal(t, 1, len(pkg.Imports()))
+	assert.Equal(t, 3, len(pkg.Imports()))
 	assert.Equal(t, 3, len(pkg.Options()))
 	assert.Equal(t, 2, len(pkg.Messages()))
 	assert.Equal(t, 1, len(pkg.Enums()))
-
-	log.Infof("\nPackage:\n\tLocation: %s\n\tName: %s\n\tComment:\n%s\n", pkg.Name(), pkg.Qualifier(), pkg.Comment())
 }

@@ -85,6 +85,10 @@ type Option interface {
 	SetComment(in string)
 }
 
+type MessageOption interface {
+	Option
+}
+
 type Package interface {
 	Qualified
 
@@ -111,6 +115,11 @@ type Message interface {
 
 	Attributes() []Attribute
 	AddAttribute(attribute Attribute) Message
+
+	Options() []MessageOption
+	AddOption(option MessageOption) Message
+
+	ContainsOptionName(name string) bool
 
 	Messages() []Message
 	AddMessage(message Message) Message

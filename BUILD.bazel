@@ -37,6 +37,16 @@ gazelle(name = "gazelle")
 
 archive_base_name = "proto-gen-parser"
 
+gazelle(
+    name = "gazelle-update-repos",
+    args = [
+        "-from_file=go.mod",
+        "-to_macro=deps.bzl%go_dependencies",
+        "-prune",
+    ],
+    command = "update-repos",
+)
+
 pkg_zip(
     name = "main_zip",
     srcs = [

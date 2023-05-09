@@ -20,15 +20,15 @@ import "github.com/GoogleCloudPlatform/proto-gen-parser/pkg/api"
 
 type enum struct {
 	api.Qualified
-	values []api.EnumValue
+	EnumValues []api.EnumValue
 }
 
 func (e *enum) Values() []api.EnumValue {
-	return e.values
+	return e.EnumValues
 }
 
 func (e *enum) AddValue(value api.EnumValue) api.Enum {
-	e.values = append(e.values, value)
+	e.EnumValues = append(e.EnumValues, value)
 	return e
 }
 

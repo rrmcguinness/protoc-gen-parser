@@ -1,4 +1,5 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+load("//:deps.bzl", "COMMON_API_PROTOS", "WELL_KNOWN_TYPES", "PROTO_GEN_BQ_TYPES")
 
 go_test(
     name = "reader_test",

@@ -35,10 +35,12 @@ func init() {
 		&PackageVisitor{},
 		&OptionVisitor{},
 		&ImportVisitor{},
+		&MessageOptionVisitor{},
 		NewEnumVisitor(false),
 		NewMessageVisitor(false),
-		NewAttributeVisitor(),
-		NewServiceVisitor(true),
+		NewAttributeVisitor(false),
+		NewAnnotationVisitor(false),
+		NewServiceVisitor(false),
 	)
 }
 

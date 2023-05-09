@@ -92,6 +92,12 @@ func newLine(in string) *Line {
 		// Handle Syntax Stings
 		line.Syntax = strings.TrimSpace(in[0:strings.Index(in, Semicolon)])
 		line.Token = Semicolon
+	} else if strings.Contains(in, OpenBracket) {
+		line.Syntax = strings.TrimSpace(in[0:strings.Index(in, OpenBracket)])
+		line.Token = OpenBracket
+	} else if strings.Contains(in, ClosedBracket) {
+		line.Syntax = strings.TrimSpace(in[0:strings.Index(in, ClosedBracket)])
+		line.Token = ClosedBracket
 	} else if strings.Contains(in, OpenBrace) {
 		// Handle Structure Strings
 		line.Syntax = strings.TrimSpace(in[0:strings.Index(in, OpenBrace)])
@@ -122,7 +128,8 @@ func readFileToArray(file *os.File) []string {
 
 	for scanner.Scan() {
 		rune := scanner.Text()
-		if !strings.HasPrefix(line, MultiLineCommentInitiator) && (rune == Semicolon || rune == OpenBrace || rune == ClosedBrace) {
+		if !strings.HasPrefix(line, MultiLineCommentInitiator) && (rune == Semicolon || rune == OpenBracket || rune == ClosedBracket || rune == OpenBrace || rune == ClosedBrace) {
+			// Add continuation rule for inline option blocks
 			lines = append(lines, line+rune, Space)
 			tokenReached = true
 			line = ""

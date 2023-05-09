@@ -19,27 +19,27 @@ package pb
 import "github.com/GoogleCloudPlatform/proto-gen-parser/pkg/api"
 
 type qualified struct {
-	qualifier string
-	name      string
-	comment   string
+	QualifierValue string
+	NameValue      string
+	CommentValue   string
 }
 
 func newQualified(qualifier string, name string, comment string) api.Qualified {
-	return &qualified{qualifier: qualifier, name: name, comment: comment}
+	return &qualified{QualifierValue: qualifier, NameValue: name, CommentValue: comment}
 }
 
 func (q *qualified) Qualifier() string {
-	return q.qualifier
+	return q.QualifierValue
 }
 
 func (q *qualified) Name() string {
-	return q.name
+	return q.NameValue
 }
 
 func (q *qualified) Comment() string {
-	return q.comment
+	return q.CommentValue
 }
 
 func (q *qualified) SetComment(in string) {
-	q.comment = in
+	q.CommentValue = in
 }

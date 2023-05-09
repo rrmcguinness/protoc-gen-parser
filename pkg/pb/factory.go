@@ -22,24 +22,24 @@ type ProtobufFactory struct{}
 
 func (p ProtobufFactory) NewPackage(path string, name string, comment string) api.Package {
 	return &_package{
-		Qualified: newQualified(path, name, comment),
-		options:   make([]api.Option, 0),
-		imports:   make([]api.Import, 0),
-		messages:  make([]api.Message, 0),
-		enums:     make([]api.Enum, 0),
-		services:  make([]api.Service, 0),
-		graph:     api.NewGraph(),
+		Qualified:     newQualified(path, name, comment),
+		OptionValues:  make([]api.Option, 0),
+		ImportValues:  make([]api.Import, 0),
+		MessageValues: make([]api.Message, 0),
+		EnumValues:    make([]api.Enum, 0),
+		ServiceValues: make([]api.Service, 0),
+		Graph:         api.NewGraph(),
 	}
 }
 
 func (p ProtobufFactory) NewMessage(qualifier string, name string, comment string) api.Message {
 	return &message{
-		Qualified:  newQualified(qualifier, name, comment),
-		attributes: make([]api.Attribute, 0),
-		messages:   make([]api.Message, 0),
-		enums:      make([]api.Enum, 0),
-		reserved:   make([]api.Reserved, 0),
-		graph:      api.NewGraph(),
+		Qualified:       newQualified(qualifier, name, comment),
+		AttributeValues: make([]api.Attribute, 0),
+		MessageValues:   make([]api.Message, 0),
+		EnumValues:      make([]api.Enum, 0),
+		ReservedValues:  make([]api.Reserved, 0),
+		Graph:           api.NewGraph(),
 	}
 }
 
@@ -59,24 +59,24 @@ func (p ProtobufFactory) NewService(qualifier string, name string, comment strin
 }
 
 func (p ProtobufFactory) NewAnnotation(name string, value string) api.Annotation {
-	return &annotation{name: name, value: value}
+	return &annotation{NameValue: name, ValueString: value}
 }
 
 func (p ProtobufFactory) NewAttribute(qualifier string, name string, comment string, isRepeated bool, isMap bool, ordinal int, kinds ...string) api.Attribute {
 	out := &attribute{
-		Qualified: newQualified(qualifier, name, comment),
-		repeated:  isRepeated,
-		isMap:     isMap,
-		kinds:     kinds,
-		ordinal:   ordinal,
+		Qualified:     newQualified(qualifier, name, comment),
+		RepeatedValue: isRepeated,
+		IsMapValue:    isMap,
+		KindValues:    kinds,
+		OrdinalValue:  ordinal,
 	}
 	return out
 }
 
 func (p ProtobufFactory) NewEnum(qualifier string, name string, comment string, values ...api.EnumValue) api.Enum {
 	return &enum{
-		Qualified: newQualified(qualifier, name, comment),
-		values:    values,
+		Qualified:  newQualified(qualifier, name, comment),
+		EnumValues: values,
 	}
 }
 
@@ -96,9 +96,19 @@ func (p ProtobufFactory) NewImport(path string, comment string) api.Import {
 
 func (p ProtobufFactory) NewOption(name string, value string, comment string) api.Option {
 	return &option{
-		name:    name,
-		value:   value,
-		comment: comment,
+		NameValue:     name,
+		ValueString:   value,
+		CommentString: comment,
+	}
+}
+
+func (p ProtobufFactory) NewMessageOption(name string, value string, comment string) api.MessageOption {
+	return &messageOption{
+		OptionValue: &option{
+			NameValue:     name,
+			ValueString:   value,
+			CommentString: comment,
+		},
 	}
 }
 
